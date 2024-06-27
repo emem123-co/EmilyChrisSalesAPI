@@ -3,6 +3,7 @@ using EmilyChrisSalesAPI.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EmilyChrisSalesAPI.Migrations
 {
     [DbContext(typeof(EmilyChrisSalesAPIContext))]
-    partial class EmilyChrisSalesAPIContextModelSnapshot : ModelSnapshot
+    [Migration("20240627175937_Added Employees, Items and Orderlines")]
+    partial class AddedEmployeesItemsandOrderlines
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
