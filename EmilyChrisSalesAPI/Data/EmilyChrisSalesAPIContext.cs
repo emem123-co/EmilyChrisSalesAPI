@@ -16,5 +16,7 @@ namespace EmilyChrisSalesAPI.Data
 
         public DbSet<EmilyChrisSalesAPI.Models.Customer> Customers { get; set; } = default!;
         public DbSet<EmilyChrisSalesAPI.Models.Order> Orders { get; set; } = default!;
+        public DbSet<EmilyChrisSalesAPI.Models.Employees> Employees { get; set; } = default!;
+        public DbSet<EmilyChrisSalesAPI.Models.Items> Items { get; set; } = default!;
     }
 }
