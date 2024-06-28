@@ -12,35 +12,39 @@ namespace EmilyChrisSalesAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class OrdersController : ControllerBase
-    {
+    public class OrdersController : ControllerBase {
         private readonly EmilyChrisSalesAPIContext _context;
 
-        public OrdersController(EmilyChrisSalesAPIContext context)
-        {
+        public OrdersController(EmilyChrisSalesAPIContext context) {
             _context = context;
         }
 
         // GET: api/Orders
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Order>>> GetOrder()
-        {
+        public async Task<ActionResult<IEnumerable<Order>>> GetOrder() {
             return await _context.Orders.ToListAsync();
         }
 
         // GET: api/Orders/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Order>> GetOrder(int id)
-        {
+        public async Task<ActionResult<Order>> GetOrder(int id) {
             var order = await _context.Orders.FindAsync(id);
 
-            if (order == null)
-            {
+            if (order == null) {
                 return NotFound();
             }
 
             return order;
         }
+
+        //PUT SHIPPED ORDERS -- Chris 
+
+        [HttpPut("shipped /{id}")]
+        public async Task<IActionResult> ShippedOrder(int id , Order order) {
+            order.Status = "SHIPPED";
+            return await PutOrder(id, order);
+        }
+
         
         // PUT: api/Orders/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
