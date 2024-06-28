@@ -84,6 +84,22 @@ namespace EmilyChrisSalesAPI.Controllers
             return CreatedAtAction("GetOrder", new { id = order.Id }, order);
         }
 
+
+       //ADDING POST NEW ORDERS WITH NEW STATUS -- Chris 
+        [HttpPost]
+
+        public async Task<ActionResult<Order>> Orders(Order order) 
+            
+            {
+
+            order.Status = "NEW";
+            _context.Orders.Add(order);
+            await _context.SaveChangesAsync();
+
+            return CreatedAtAction("GetOrder", new { id = order.Id }, order); 
+
+        }
+
         // DELETE: api/Orders/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteOrder(int id)
