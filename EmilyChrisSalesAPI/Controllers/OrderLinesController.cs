@@ -41,6 +41,25 @@ namespace EmilyChrisSalesAPI.Controllers
 
             return orderLines;
         }
+        //CALC ORDER TOTAL
+        private async Task<IActionResult> OrderTotal(int orderID)
+        {
+            var order = await _context.Orders.FindAsync(orderID);
+            if(order is null)
+            {
+                return NotFound();
+            }
+            order.OrderTotal = (from ol in _context.OrderLines
+                                join i in _context.Items
+                                    on ol.ItemId equals i.Id
+                                where ol.OrderId == orderID
+                                select new
+                                {
+                                LineTotal = ol.Quantity * i.Price}).Sum(x=> x.LineTotal);
+
+            await _context.SaveChangesAsync();
+            return Ok();
+        }
 
         // PUT: api/OrderLines/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
@@ -70,6 +89,7 @@ namespace EmilyChrisSalesAPI.Controllers
                 }
             }
 
+            await OrderTotal(orderLines.OrderId);
             return NoContent();
         }
 
@@ -80,6 +100,7 @@ namespace EmilyChrisSalesAPI.Controllers
         {
             _context.OrderLines.Add(orderLines);
             await _context.SaveChangesAsync();
+            await OrderTotal(orderLines.OrderId);
 
             return CreatedAtAction("GetOrderLines", new { id = orderLines.Id }, orderLines);
         }
@@ -96,6 +117,7 @@ namespace EmilyChrisSalesAPI.Controllers
 
             _context.OrderLines.Remove(orderLines);
             await _context.SaveChangesAsync();
+            await OrderTotal(orderLines.OrderId);
 
             return NoContent();
         }

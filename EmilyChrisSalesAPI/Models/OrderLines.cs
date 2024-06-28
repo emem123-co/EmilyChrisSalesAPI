@@ -11,8 +11,8 @@
         public int OrderId { get; set; }
         public int ItemId { get; set; }
 
-        //public virtual Order order { get; set; }
-        public virtual Items items { get; set; }
+        public virtual Order? order { get; set; }
+        public virtual Items? items { get; set; }
 
 }
 
